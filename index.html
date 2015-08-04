@@ -10,10 +10,9 @@
 
   <script type="text/javascript">
   function initialize(){
-    var mapHeight = $("#header").css("height")+$("#footer").css("height");
-    alert(mapHeight);
+    var mapHeight = parseInt($("#header").css("height"))+parseInt($("#footer").css("height"));
     mapHeight = document.body.clientHeight - mapHeight;
-    $("#container").css("height",document.body.clientHeight.toString());
+    $("#container").css("height",mapHeight+"px");
 
     var position=new AMap.LngLat(107.750313,38.798736);
     mymap=new AMap.Map("container",{
@@ -42,7 +41,7 @@
     <div id="container"></div>
 
     <div data-role="footer" data-position="fixed" id="footer">
-    <h1>页脚文本5</h1>
+    <h1>页脚文本7</h1>
     </div>
 
   </div>
