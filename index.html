@@ -10,6 +10,9 @@
 
   <script type="text/javascript">
   function initialize(){
+    var mapHeight = $("#header").css("height")+$("#footer").css("height");
+    mapHeight = document.body.clientHeight - mapHeight;
+    $("#container").css("height",mapHeight.toString());
 
     var position=new AMap.LngLat(107.750313,38.798736);
     mymap=new AMap.Map("container",{
@@ -28,17 +31,17 @@
 <body onload="initialize()">
   <div data-role="page" id="page-init">
 
-    <div data-role="header">
+    <div data-role="header" id="header">
       <a href="#panel-upload" data-role="button" data-icon="plus">上传</a>
       <h1>2015届17班</h1>
       <a href="#panel-search" data-role="button" data-icon="search">搜索</a>
     </div>
 
 
-    <div id="container" style="height:200px"></div>
+    <div id="container" onload="initialize()"></div>
 
-    <div data-role="footer" data-position="fixed">
-    <h1>页脚文本4</h1>
+    <div data-role="footer" data-position="fixed" id="footer">
+    <h1>页脚文本5</h1>
     </div>
 
   </div>
