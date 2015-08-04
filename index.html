@@ -10,7 +10,7 @@
   <script type="text/javascript">
   function initialize(){
     var position=new AMap.LngLat(107.750313,38.798736);
-    mymap=new AMap.Map("content",{
+    mymap=new AMap.Map("container",{
       view: new AMap.View2D({//创建地图二维视口
         center:position,//创建中心点坐标
         zoom:4, //设置地图缩放级别
@@ -31,7 +31,7 @@
       <a href="#panel-search" data-role="button" data-icon="search">搜索</a>
     </div>
 
-    <div data-role="content">
+    <div data-role="content" id="container">
 
 
 
