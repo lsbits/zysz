@@ -12,7 +12,7 @@
   function initialize(){
     var mapHeight = $("#header").css("height")+$("#footer").css("height");
     mapHeight = document.body.clientHeight - mapHeight;
-    $("#container").css("height",mapHeight.toString());
+    $("#container").css("height",document.body.clientHeight.toString());
 
     var position=new AMap.LngLat(107.750313,38.798736);
     mymap=new AMap.Map("container",{
@@ -38,7 +38,7 @@
     </div>
 
 
-    <div id="container" onload="initialize()"></div>
+    <div id="container"></div>
 
     <div data-role="footer" data-position="fixed" id="footer">
     <h1>页脚文本5</h1>
