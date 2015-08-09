@@ -30,11 +30,12 @@
 
         var formData = $("#student-info").serialize();
 
-        cache: false,
+
                     $.ajax({
                       type: "POST",
                       url: "http://yuntuapi.amap.com/datamanage/data/create",
                       data: formData,
+                      cache:false,
                       success:function(data){
                         var result = JSON.parse(data);
                         alert(result.info);
@@ -81,7 +82,7 @@
     </div>
 
     <div data-role="footer" data-position="fixed" id="footer">
-    <h1>页脚文本0</h1>
+    <h1>页脚文本10</h1>
     </div>
 
 
