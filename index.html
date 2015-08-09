@@ -20,6 +20,7 @@
   function init_map()
   {
     isMapOpen = true;
+    $("#container").html("");
     var position=new AMap.LngLat(107.750313,38.798736);
     mymap=new AMap.Map("container",{
       view: new AMap.View2D({//创建地图二维视口
