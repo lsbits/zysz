@@ -29,6 +29,13 @@
 
   function my_upload()
   {
+    $("#student-info").ajaxSubmit({
+      success:function(data){
+        var result = JSON.parse(data);
+        alert(result.message);
+      }
+    });
+
     return false;
   }
 
