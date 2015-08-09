@@ -15,6 +15,15 @@
     $("#container").css("height",mapHeight+"px");
 
     isMapOpen = false;
+
+    $(document).ready(function(){
+      $("#upload").click(function(){
+
+        var formData = $("#student-info").serialize();
+        alert(formData["fullname"]);
+        
+      });
+    });
   }
 
   function init_map()
@@ -39,20 +48,10 @@
 <body onload="initialize()">
   <div data-role="page" id="page-init">
 
-    <div data-role="panel" id="panel-upload">
-      <form id="student-info">
-
-        <label for="fullname">姓名</label>
-        <input type="text" name="fullname" id="fullname" value="真实姓名"/>
-
-      </form>
-
-    </div>
-
     <div data-role="header" id="header">
-      <a href="#panel-upload" data-role="button" data-icon="plus">上传</a>
+      <a href="#page-upload" data-role="button" data-icon="plus">上传</a>
       <h1>2015届17班</h1>
-      <a href="#panel-search" data-role="button" data-icon="search">搜索</a>
+      <a href="#page-search" data-role="button" data-icon="search">搜索</a>
     </div>
 
 
@@ -64,6 +63,38 @@
     <h1>页脚文本9</h1>
     </div>
 
+
+  </div>
+
+  <div data-role="page" id="page-upload">
+
+      <div data-role="header" id="header">
+        <h1>上传新信息</h1>
+      </div>
+
+
+      <div id="container">
+        <form id="student-info">
+          <div data-role="fieldcontain">
+
+            <label for="fullname">姓名</label>
+            <input type="text" name="fullname" id="fullname" value="真实姓名"/>
+
+            <label for="number">电话号码</label>
+            <input type="text" name="number" id="number" value="联系方式"/>
+
+            <label for="school">就读学校</label>
+            <input type="text" name="school" id="school" value=""/>
+
+            <input type="hidden" name="key" value="4968b91cb8725bf026cbf5c6a9a833e4"/>
+            <input type="hidden" name="tableid" value="55c715c2e4b05d86ecef1a1f"/>
+            <input type="hidden" name="loctype" value="1"/>
+
+            <button id="upload" type="submit">上传</button>
+
+          </div>
+        </form>
+      </div>
 
   </div>
 
