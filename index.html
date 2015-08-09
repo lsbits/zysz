@@ -43,7 +43,6 @@
       }
   });
 
-    return false;
   }
 
   </script>
@@ -65,7 +64,7 @@
     </div>
 
     <div data-role="footer" data-position="fixed" id="footer">
-    <h1>页脚文本19</h1>
+    <h1>页脚文本20</h1>
     </div>
 
 
@@ -79,7 +78,7 @@
 
 
       <div id="container">
-        <form id="student-info" name="student-info" action="http://api.map.baidu.com/geodata/v3/poi/create" method="post" onsubmit="return my_upload();">
+        <form id="student-info" name="student-info">
           <div data-role="fieldcontain">
 
             <label for="fullname">姓名</label>
@@ -98,7 +97,7 @@
             <input type="hidden" name="longitude" value="105">
             <input type="hidden" name="tags" value="tx">
 
-            <button id="upload" type="submit">上传</button>
+            <a data-role="button" data-icon="plus" onclick="my_upload()">上传</a>
 
           </div>
         </form>
