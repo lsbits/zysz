@@ -27,6 +27,17 @@
     map.centerAndZoom(point, 5);                 // 初始化地图，设置中心点坐标和地图级别
   }
 
+  function upload()
+  {
+    $("#student-info").ajaxSubmit({
+      success:function(data)
+      {
+        var result = JSON.parse(data);
+        alert(result.message);
+      }
+    });
+  }
+
   </script>
 
 </head>
@@ -60,7 +71,7 @@
 
 
       <div id="container">
-        <form id="student-info" name="student-info" action="http://api.map.baidu.com/geodata/v3/poi/create" method="post">
+        <form id="student-info" name="student-info" action="http://api.map.baidu.com/geodata/v3/poi/create" method="post" onsubmit="return upload()">
           <div data-role="fieldcontain">
 
             <label for="fullname">姓名</label>
