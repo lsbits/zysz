@@ -15,7 +15,7 @@
     $("#container").css("height",mapHeight+"px");
 
     isMapOpen = false;
-    
+
   }
 
   function init_map()
@@ -24,7 +24,7 @@
     $("#container").html("");
     var map = new BMap.Map("container");          // 创建地图实例
     var point = new BMap.Point(107.750313,38.798736);  // 创建点坐标
-    map.centerAndZoom(point, 4);                 // 初始化地图，设置中心点坐标和地图级别
+    map.centerAndZoom(point, 5);                 // 初始化地图，设置中心点坐标和地图级别
   }
 
   </script>
@@ -60,7 +60,7 @@
 
 
       <div id="container">
-        <form id="student-info" name="student-info">
+        <form id="student-info" name="student-info" action="http://api.map.baidu.com/geodata/v3/poi/create" method="post">
           <div data-role="fieldcontain">
 
             <label for="fullname">姓名</label>
@@ -72,10 +72,12 @@
             <label for="school">就读学校</label>
             <input type="text" name="school" id="school" value=""/>
 
-            <input type="hidden" name="key" value="4968b91cb8725bf026cbf5c6a9a833e4"/>
-            <input type="hidden" name="tableid" value="55c715c2e4b05d86ecef1a1f"/>
-            <input type="hidden" name="loctype" value="2"/>
-            <input type="hidden" name="data" value="">
+            <input type="hidden" name="ak" value="CzGOPnVbyB85ZGs6wppKFRNt"/>
+            <input type="hidden" name="geotable_id" value="115139"/>
+            <input type="hidden" name="coord_type" value="3"/>
+            <input type="hidden" name="latitude" value="11">
+            <input type="hidden" name="longitude" value="105">
+            <input type="hidden" name="tags" value="tx">
 
             <button id="upload" type="submit">上传</button>
 
