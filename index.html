@@ -29,12 +29,19 @@
 
   function my_upload()
   {
-    $("#student-info").ajaxSubmit({
-      success:function(data){
-        var result = JSON.parse(data);
-        alert(result.message);
+    $.ajax({
+      type:"POST",
+      url:"http://api.map.baidu.com/geodata/v3/poi/create",
+      data:$("#student-info").serialize(),
+      async: false,
+      error: function(request){
+        alert("error!");
       }
-    });
+      success: function(data){
+        var r = JSON.parse(data);
+        alert(r.message);
+      }
+  });
 
     return false;
   }
