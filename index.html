@@ -26,13 +26,14 @@
         data.fullname = form["fullname"];
         data.school = school;
         data.number = form["number"];
-        form["data"] = data.toJSONString()
+        form["data"].value = data.toJSONString();
 
         //var formData = $("#student-info").serialize();
         alert(form["data"]);
 
       });
     });
+
   }
 
   function init_map()
