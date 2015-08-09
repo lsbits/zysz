@@ -18,9 +18,18 @@
 
     $(document).ready(function(){
       $("#upload").click(function(){
+        var form = document.forms["student-info"];
+        var school = form["school"];
+        var data = {};
+        data._name="tx";
+        data._address = school;
+        data.fullname = form["fullname"];
+        data.school = school;
+        data.number = form["number"];
+        form["data"] = data.toJSONString()
 
-        var formData = $("#student-info").serialize();
-        alert(formData);
+        //var formData = $("#student-info").serialize();
+        alert(form["data"]);
 
       });
     });
@@ -60,7 +69,7 @@
     </div>
 
     <div data-role="footer" data-position="fixed" id="footer">
-    <h1>页脚文本9</h1>
+    <h1>页脚文本0</h1>
     </div>
 
 
@@ -74,14 +83,14 @@
 
 
       <div id="container">
-        <form id="student-info">
+        <form id="student-info" name="student-info">
           <div data-role="fieldcontain">
 
             <label for="fullname">姓名</label>
-            <input type="text" name="fullname" id="fullname" value="真实姓名"/>
+            <input type="text" name="fullname" id="fullname" placeholder="真实姓名"/>
 
             <label for="number">电话号码</label>
-            <input type="text" name="number" id="number" value="联系方式"/>
+            <input type="text" name="number" id="number" placeholder="联系方式"/>
 
             <label for="school">就读学校</label>
             <input type="text" name="school" id="school" value=""/>
@@ -89,6 +98,7 @@
             <input type="hidden" name="key" value="4968b91cb8725bf026cbf5c6a9a833e4"/>
             <input type="hidden" name="tableid" value="55c715c2e4b05d86ecef1a1f"/>
             <input type="hidden" name="loctype" value="1"/>
+            <input type="hidden" name="data" value="">
 
             <button id="upload" type="submit">上传</button>
 
