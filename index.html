@@ -27,7 +27,7 @@
     map.centerAndZoom(point, 5);                 // 初始化地图，设置中心点坐标和地图级别
   }
 
-  function upload()
+  function my_upload()
   {
     return false;
   }
@@ -51,7 +51,7 @@
     </div>
 
     <div data-role="footer" data-position="fixed" id="footer">
-    <h1>页脚文本16</h1>
+    <h1>页脚文本17</h1>
     </div>
 
 
@@ -65,7 +65,7 @@
 
 
       <div id="container">
-        <form id="student-info" name="student-info" action="http://api.map.baidu.com/geodata/v3/poi/create" method="post" onsubmit="return false;">
+        <form id="student-info" name="student-info" action="http://api.map.baidu.com/geodata/v3/poi/create" method="post" onsubmit="return my_upload();">
           <div data-role="fieldcontain">
 
             <label for="fullname">姓名</label>
