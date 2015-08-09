@@ -14,6 +14,12 @@
     mapHeight = document.body.clientHeight - mapHeight;
     $("#container").css("height",mapHeight+"px");
 
+    isMapOpen = false;
+  }
+
+  function init_map()
+  {
+    isMapOpen = true;
     var position=new AMap.LngLat(107.750313,38.798736);
     mymap=new AMap.Map("container",{
       view: new AMap.View2D({//创建地图二维视口
@@ -38,7 +44,9 @@
     </div>
 
 
-    <div id="container"></div>
+    <div id="container">
+      <a data-role="button" onclick="init_map()">打开地图</a>
+    </div>
 
     <div data-role="footer" data-position="fixed" id="footer">
     <h1>页脚文本8</h1>
