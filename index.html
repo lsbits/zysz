@@ -28,8 +28,19 @@
         data.number = form["number"];
         form["data"].value = JSON.stringify(data);
 
-        //var formData = $("#student-info").serialize();
-        alert(form["data"]);
+        var formData = $("#student-info").serialize();
+
+        cache: false,
+                    $.ajax({
+                      type: "POST",
+                      url: "http://yuntuapi.amap.com/datamanage/data/create",
+                      data: formData,
+                      success:function(data){
+                        var result = JSON.parse(data);
+                        alert(result.info);
+                        $.mobile.changePage("index.html");
+                      }
+                });
 
       });
     });
@@ -98,7 +109,7 @@
 
             <input type="hidden" name="key" value="4968b91cb8725bf026cbf5c6a9a833e4"/>
             <input type="hidden" name="tableid" value="55c715c2e4b05d86ecef1a1f"/>
-            <input type="hidden" name="loctype" value="1"/>
+            <input type="hidden" name="loctype" value="2"/>
             <input type="hidden" name="data" value="">
 
             <button id="upload" type="submit">上传</button>
