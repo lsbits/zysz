@@ -10,7 +10,7 @@
 
   <script type="text/javascript">
   function initialize(){
-    var mapHeight = parseInt($("#header").css("height"));
+    var mapHeight = parseInt($("#header").css("height"))+parseInt($("#footer").css("height"));
     mapHeight = document.body.clientHeight - mapHeight;
     $("#container").css("height",mapHeight+"px");
 
@@ -29,8 +29,37 @@
 
   function my_upload()
   {
-    alert("ok!");
+    var myGeo = new BMap.Geocoder();
+    var student = document.forms["student-info"];
+
+    myGeo.getPoint(student.elements["school"].value,function(point){
+      if(point)
+      {
+        student.elements["longitude"].value = point.lng;
+        student.elements["latitude"].value = point.lat;
+
+        $.ajax({
+                type: "post",
+                url: "http://api.map.baidu.com/geodata/v3/poi/create",
+                data: $("#student-info").serialize(),
+                success: function(data) {
+                    //var r = JSON.parse(data);
+                    alert("上传成功!");
+                },
+                error: function(data) {
+              //    var r = JSON.parse(data);
+                  alert("上传成功!");
+                }
+            });
+      }
+      else {
+        alert("请正确输入信息!");
+        return;
+      }
+    },"全国");
+
   }
+
 
   </script>
 
@@ -40,7 +69,7 @@
   <div data-role="page" id="page-init">
 
     <div data-role="header" id="header">
-      <a href="#page-upload" data-role="button" data-icon="plus">上传</a>
+      <a href="#page-upload" data-role="button" data-icon="plus" data-transition="flow" data-direction="reverse">上传</a>
       <h1>2015届17班</h1>
       <a href="#page-search" data-role="button" data-icon="search">搜索</a>
     </div>
@@ -50,8 +79,12 @@
       <a data-role="button" onclick="init_map()">打开地图</a>
     </div>
 
-    <div data-role="footer" data-position="fixed" id="footer">
-    <h1>页脚文本20</h1>
+    <div data-role="footer" id="footer">
+      <div data-role="controlgroup" data-type="horizontal">
+        <a data-role="button" onclick="putMakers()">同学分布</a>
+        <a data-role="button" onclick="">地区热度</a>
+        <a data-role="button" onclick="">恢复默认</a>
+  </div>
     </div>
 
 
@@ -61,6 +94,7 @@
 
       <div data-role="header" id="header">
         <h1>上传新信息</h1>
+        <a href="#page-init" data-role="button" data-icon="arrow-r" class="ui-btn-right" data-transition="flow">返回</a>
       </div>
 
 
@@ -84,7 +118,7 @@
             <input type="hidden" name="longitude" value="105">
             <input type="hidden" name="tags" value="tx">
 
-            <a data-role="button" data-icon="plus" onclick="my_upload()">上传</a>
+            <a data-role="button" data-icon="plus" data-inline="true" onclick="my_upload()">上传</a>
 
           </div>
         </form>
