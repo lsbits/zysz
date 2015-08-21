@@ -6,26 +6,33 @@
   <link rel="stylesheet" href="css/jquery.mobile-1.3.2.min.css">
   <script src="js/jquery-1.8.3.min.js"></script>
   <script src="js/jquery.mobile-1.3.2.min.js"></script>
-  <script type="text/javascript" src="http://api.map.baidu.com/api?v=1.5&ak=CzGOPnVbyB85ZGs6wppKFRNt"></script>
+  <script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=CzGOPnVbyB85ZGs6wppKFRNt"></script>
 
   <script type="text/javascript">
+  classmates = {} //以学校为索引
+  locations = {}
+  isMapOpen = false;
+  isMarkersOn = false;
+  isHeatmapOn = false;
+
   function initialize(){
-    var mapHeight = parseInt($("#header").css("height"))+parseInt($("#footer").css("height"));
+    var mapHeight = parseInt($("#header").css("height"));
     mapHeight = document.body.clientHeight - mapHeight;
     $("#container").css("height",mapHeight+"px");
 
-    isMapOpen = false;
-
+    $("#info-window").slideUp();
   }
+
 
   function init_map()
   {
     isMapOpen = true;
     $("#container").html("");
-    var map = new BMap.Map("container");          // 创建地图实例
+    map = new BMap.Map("container");          // 创建地图实例
     var point = new BMap.Point(107.750313,38.798736);  // 创建点坐标
     map.centerAndZoom(point, 5);                 // 初始化地图，设置中心点坐标和地图级别
   }
+
 
   function my_upload()
   {
@@ -39,18 +46,11 @@
         student.elements["latitude"].value = point.lat;
 
         $.ajax({
-                type: "post",
-                url: "http://api.map.baidu.com/geodata/v3/poi/create",
-                data: $("#student-info").serialize(),
-                success: function(data) {
-                    //var r = JSON.parse(data);
-                    alert("上传成功!");
-                },
-                error: function(data) {
-              //    var r = JSON.parse(data);
-                  alert("上传成功!");
-                }
-            });
+          url:"http://api.map.baidu.com/geodata/v3/poi/create",
+          data:$("#student-info").serialize(),
+          type:"POST",
+          complete:function(){alert("上传成功!");}
+          });
       }
       else {
         alert("请正确输入信息!");
@@ -60,6 +60,83 @@
 
   }
 
+  function putMarkers()
+  {
+
+    if(!isMapOpen)
+    {
+      alert("请先打开地图!");
+      return;
+    }
+
+    if(isMarkersOn)
+      return;
+    isMarkersOn = true;
+    $.getJSON("http://api.map.baidu.com/geodata/v3/poi/list?ak=CzGOPnVbyB85ZGs6wppKFRNt&geotable_id=116716&callback=?",function(r){
+      $.each(r.pois,function(n, value){
+        if(classmates[value.school]){
+           classmates[value.school].push({
+             "fullname":value.fullname,
+             "number":value.number
+           });
+         }
+        else {
+          classmates[value.school] = new Array({
+            "fullname":value.fullname,
+            "number":value.number
+          });
+        }
+
+        locations[value.school] = value.location;
+      });
+
+      for(var school in classmates)
+      {
+        var point = new BMap.Point(locations[school][0],locations[school][1]);
+        var marker = new BMap.Marker(point);
+        marker.school = school;
+        marker.students = classmates[school];
+        marker.addEventListener("click",function(e){
+          students = e.target.students;
+
+          var sname = $("#school-name").clone(true);
+          $("#student-list").html("");
+          $("#student-list").append(sname);
+          $("#school-name").text(e.target.school+" 共"+e.target.students.length+"人");
+
+          $("#info-window").slideToggle();
+
+          for(var i in students)
+          {
+            var c = students[i];
+            var li  = document.createElement("li");
+            var ul = document.getElementById("student-list");
+            li.innerHTML = "<h2>"+c.fullname+"</h2>"+"<p><strong>"+c.number+"</strong></p>";
+            ul.appendChild(li);
+          }
+
+        });
+        map.addOverlay(marker);
+      }
+
+    });
+
+  }
+
+  function putHeatmap()
+  {
+    $("#info-window").slideToggle();
+  }
+
+  function restore()
+  {
+    if(!isMapOpen)
+      return;
+    map.reset();
+    var overlays = map.getOverlays();
+    for( var n in overlays )
+      map.removeOverlay(overlays[n]);
+  }
 
   </script>
 
@@ -69,24 +146,27 @@
   <div data-role="page" id="page-init">
 
     <div data-role="header" id="header">
-      <a href="#page-upload" data-role="button" data-icon="plus" data-transition="flow" data-direction="reverse">上传</a>
+      <a href="#page-upload" data-role="button" data-icon="plus">上传</a>
       <h1>2015届17班</h1>
-      <a href="#page-search" data-role="button" data-icon="search">搜索</a>
+<!--      <a href="#info-window" data-role="button" data-icon="search">搜索</a> -->
     </div>
 
+    <div id="info-window">
+      <ul data-role="listview" data-inset="true" id="student-list">
+          <li data-role="list-divider" id="school-name"></li>
+      </ul>
+    </div>
 
     <div id="container">
       <a data-role="button" onclick="init_map()">打开地图</a>
     </div>
 
-    <div data-role="footer" id="footer">
+    <div data-role="footer" id="footer" data-position="fixed" style="text-align: center">
       <div data-role="controlgroup" data-type="horizontal">
-        <a data-role="button" onclick="putMakers()">同学分布</a>
-        <a data-role="button" onclick="">地区热度</a>
-        <a data-role="button" onclick="">恢复默认</a>
-  </div>
+        <a data-role="button" onclick="putMarkers()">同学分布</a>
+        <a data-role="button" onclick="restore()">恢复默认</a>
+      </div>
     </div>
-
 
   </div>
 
@@ -94,9 +174,8 @@
 
       <div data-role="header" id="header">
         <h1>上传新信息</h1>
-        <a href="#page-init" data-role="button" data-icon="arrow-r" class="ui-btn-right" data-transition="flow">返回</a>
+        <a href="#page-init" data-role="button" data-icon="arrow-r" class="ui-btn-right">返回</a>
       </div>
-
 
       <div id="container">
         <form id="student-info" name="student-info">
@@ -112,7 +191,7 @@
             <input type="text" name="school" id="school" value=""/>
 
             <input type="hidden" name="ak" value="CzGOPnVbyB85ZGs6wppKFRNt"/>
-            <input type="hidden" name="geotable_id" value="115139"/>
+            <input type="hidden" name="geotable_id" value="116716"/>
             <input type="hidden" name="coord_type" value="3"/>
             <input type="hidden" name="latitude" value="11">
             <input type="hidden" name="longitude" value="105">
@@ -125,6 +204,7 @@
       </div>
 
   </div>
+
 
 </body>
 </html>
