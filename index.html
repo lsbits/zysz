@@ -72,7 +72,7 @@
     if(isMarkersOn)
       return;
     isMarkersOn = true;
-    $.getJSON("http://api.map.baidu.com/geodata/v3/poi/list?ak=CzGOPnVbyB85ZGs6wppKFRNt&geotable_id=116716&callback=?",function(r){
+    $.getJSON("http://api.map.baidu.com/geodata/v3/poi/list?ak=CzGOPnVbyB85ZGs6wppKFRNt&geotable_id=116716&page_size=999&callback=?",function(r){
       $.each(r.pois,function(n, value){
         if(classmates[value.school]){
            classmates[value.school].push({
