@@ -72,6 +72,8 @@
     if(isMarkersOn)
       return;
     isMarkersOn = true;
+    classmates = {} //以学校为索引
+    locations = {}
     $.getJSON("http://api.map.baidu.com/geodata/v3/poi/list?ak=CzGOPnVbyB85ZGs6wppKFRNt&geotable_id=116716&page_size=200&callback=?",function(r){
       $.each(r.pois,function(n, value){
         if(classmates[value.school]){
