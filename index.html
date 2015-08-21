@@ -133,6 +133,7 @@
     if(!isMapOpen)
       return;
     map.reset();
+    isMarkersOn = false;
     var overlays = map.getOverlays();
     for( var n in overlays )
       map.removeOverlay(overlays[n]);
